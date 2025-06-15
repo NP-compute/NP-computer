@@ -203,7 +203,9 @@ def test_np_computer():
     
     print("✓ PASSED\n")
     
-    print("=== All Tests Completed Successfully! ===")
+def test_all():
+    test_np_computer()
 
 if __name__ == "__main__":
-    test_np_computer()
+    test_all()
+    print("All tests completed.")

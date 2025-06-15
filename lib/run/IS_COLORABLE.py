@@ -29,7 +29,7 @@ def is_colorable(graph, k=3, visualize=False):
         return False, {}
     
 
-if __name__ == "__main__":
+def test_is_colorable():
     # Test code
 
     # Create graph
@@ -47,4 +47,11 @@ if __name__ == "__main__":
     colorable, coloring = is_colorable(G, k=3, visualize=False)
     assert colorable == False
 
+    print("All tests passed.")
+
+def test_all():
+    test_is_colorable()
+
+if __name__ == "__main__":
+    test_all()
     print("All tests passed.")

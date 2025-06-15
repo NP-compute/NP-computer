@@ -58,7 +58,10 @@ def test_NOT_ONE_to_ZERO():
     assert mapping[input_node] == mapping[TriBit.ONE]
     assert mapping[result_node] == mapping[TriBit.ZERO]
 
-if __name__ == "__main__":
+def test_all():
     test_NOT_ZERO_to_ONE()
     test_NOT_ONE_to_ZERO()
-    print("All tests passed!")
+
+if __name__ == "__main__":
+    test_all()
+    print("All tests passed")
