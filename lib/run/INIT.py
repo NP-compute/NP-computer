@@ -1,14 +1,7 @@
 # This is used to initialize the NP computer, and will be used to add nodes and edges to the graph
 import networkx as nx
-from enum import Enum
 from IS_COLORABLE import is_colorable
-
-class TriBit(Enum):
-    ZERO = 0
-    ONE = 1
-    X = 'X'
-
-ALL_TRI_BITS = {TriBit.ZERO, TriBit.ONE, TriBit.X}
+from FINALS import TriBit, ALL_TRI_BITS
 
 class NPComputer:
     def __init__(self):
