@@ -1,0 +1,20 @@
+# This is a script to test all the components of the library
+def test_all():
+
+    from lib.run import IS_COLORABLE
+    IS_COLORABLE.test_all()
+
+    from lib.run import INIT
+    INIT.test_all()
+
+    from lib.binary_logic import NOT
+    NOT.test_all()
+
+    from lib.binary_logic import SWAP
+    SWAP.test_all()
+
+if __name__ == "__main__":
+    test_all()
+    print("All tests passed!")
+
+    
