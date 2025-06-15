@@ -172,7 +172,9 @@ def test_np_computer():
     np_comp.add_edge(node1, node4)
     
     print(f"Created constrained scenario with nodes: {node1}, {node2}, {node3}, {node4}")
-    print(f"Graph is 3-colorable: {np_comp()}")
+    result = np_comp()
+    print(f"Graph is 3-colorable: {result}")
+    assert result == False, "Graph should not be 3 colorable"
     # This might still be 3-colorable depending on the constraints
     print("✓ PASSED\n")
     
