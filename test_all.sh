@@ -5,3 +5,4 @@ python3 -m lib.run.IS_COLORABLE
 python3 -m lib.run.FINALS # No real tests for this one
 python3 -m lib.run.INIT
 python3 -m lib.run.VAR
+python3 -m lib.binary_logic.NOT
