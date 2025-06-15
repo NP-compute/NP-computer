@@ -33,7 +33,25 @@ class NPComputer:
     def __call__(self, *args, **kwds):
         
         # Run the graph coloring algorithm to see if the graph if it is 3 colorable
-        return is_colorable(self.graph)[0]
+        # Essentially this computer returns true or false based off of if the graph is 3 colorable
+        return self.get_result_mapping()[0]
+    
+    def get_mapping(self):
+        """ Get the mapping of nodes to colors of the graph regardless of if it is 3 colorable
+
+        Returns:
+            dict: Mapping of nodes to colors
+        """
+        return self.get_result_mapping()[1]
+    
+    def get_result_mapping(self):
+        """ Gets the result and mapping of the graph
+
+        Returns:
+            (bool, dict): (result, mapping)
+        """
+        
+        return is_colorable(self.graph)
 
 # Test code
 def test_np_computer():
