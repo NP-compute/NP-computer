@@ -10,7 +10,7 @@ class NPComputer:
         # Add in 3 nodes that are fully connected to each other to get 0, 1, and X
         self.graph.add_edges_from([(TriBit.ZERO, TriBit.ONE), (TriBit.ONE, TriBit.X), (TriBit.X, TriBit.ZERO)])
 
-    def generate_node(self, allow={TriBit.ZERO, TriBit.ONE, TriBit.X}):
+    def generate_node(self, allow={TriBit.ZERO, TriBit.ONE, TriBit.X}) -> int:
         """ Add a node to the graph, with optional constraints on what values it can take
 
         Args:
@@ -32,56 +32,6 @@ class NPComputer:
 
     def __call__(self, *args, **kwds):
         
-        # Run the graph coloring algorithm to see if the graph if it is 3 colorable
-        return is_colorable(self.graph)[0]
-
-import networkx as nx
-from enum import Enum
-
-# Mock is_colorable function since we don't have the actual implementation
-def is_colorable(graph, k=3, visualize=False):
-    """Mock implementation of is_colorable function"""
-    try:
-        coloring = nx.coloring.greedy_color(graph, strategy='largest_first')
-        num_colors = len(set(coloring.values()))
-        return (num_colors <= k, coloring)
-    except:
-        return (False, {})
-
-class TriBit(Enum):
-    ZERO = 0
-    ONE = 1
-    X = 'X'
-
-ALL_TRI_BITS = {TriBit.ZERO, TriBit.ONE, TriBit.X}
-
-class NPComputer:
-    def __init__(self):
-        self.graph = nx.Graph()
-
-        # Add in 3 nodes that are fully connected to each other to get 0, 1, and X
-        self.graph.add_edges_from([(TriBit.ZERO, TriBit.ONE), (TriBit.ONE, TriBit.X), (TriBit.X, TriBit.ZERO)])
-
-    def generate_node(self, allow={TriBit.ZERO, TriBit.ONE, TriBit.X}):
-        """ Add a node to the graph, with optional constraints on what values it can take
-
-        Args:
-            allow (dict, optional): Defines what TriBits this node can take, defaults to allow all values. Defaults to {TriBit.ZERO, TriBit.ONE, TriBit.X}.
-        """
-
-        node_id = len(self.graph.nodes) + 1
-        self.graph.add_node(node_id)
-
-        # Connect this node to all TriBits that it is NOT allowed to be so the coloring algorithm can't assign it that value
-        for tri_bit in ALL_TRI_BITS - allow:
-            self.graph.add_edge(node_id, tri_bit)
-
-        return node_id
-
-    def add_edge(self, u, v):
-        self.graph.add_edge(u, v)
-
-    def __call__(self, *args, **kwds):
         # Run the graph coloring algorithm to see if the graph if it is 3 colorable
         return is_colorable(self.graph)[0]
 
