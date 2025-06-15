@@ -46,3 +46,5 @@ if __name__ == "__main__":
     # Assert that this graph is not 3 colorable
     colorable, coloring = is_colorable(G, k=3, visualize=False)
     assert colorable == False
+
+    print("All tests passed.")

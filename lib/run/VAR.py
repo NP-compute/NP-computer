@@ -1,7 +1,7 @@
 # This is an abstract class to represent n bit variables
 
-from FINALS import TriBit, ALL_TRI_BITS
-from INIT import NPComputer
+from lib.run.FINALS import TriBit, ALL_TRI_BITS
+from lib.run.INIT import NPComputer
 
 class VAR:
     def __init__(self, computer: NPComputer, n: int):

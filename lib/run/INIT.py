@@ -1,7 +1,7 @@
 # This is used to initialize the NP computer, and will be used to add nodes and edges to the graph
 import networkx as nx
-from IS_COLORABLE import is_colorable
-from FINALS import TriBit, ALL_TRI_BITS
+from lib.run.IS_COLORABLE import is_colorable
+from lib.run.FINALS import TriBit, ALL_TRI_BITS
 
 class NPComputer:
     def __init__(self):
