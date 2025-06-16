@@ -13,6 +13,9 @@ def test_all():
     from lib.binary_logic import SWAP
     SWAP.test_all()
 
+    from lib.binary_logic import AND
+    AND.test_all()
+
 if __name__ == "__main__":
     test_all()
     print("All tests passed!")
