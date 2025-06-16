@@ -22,6 +22,9 @@ def test_all():
     from lib.binary_logic import OR
     OR.test_all()
 
+    from lib.binary_logic import NOR
+    NOR.test_all()
+
 if __name__ == "__main__":
     test_all()
     print("All tests passed!")
