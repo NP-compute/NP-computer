@@ -25,6 +25,9 @@ def test_all():
     from lib.binary_logic import NOR
     NOR.test_all()
 
+    from lib.binary_logic import XOR
+    XOR.test_all()
+
 if __name__ == "__main__":
     test_all()
     print("All tests passed!")

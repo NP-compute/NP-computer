@@ -1,0 +1,91 @@
+# This performs 2 bit XOR logic operation
+
+from lib.run.INIT import NPComputer
+from lib.run.FINALS import TriBit, ALL_TRI_BITS
+from lib.binary_logic.NOT import NOT
+from lib.binary_logic.NAND import NAND
+from lib.binary_logic.NOR import NOR
+from lib.binary_logic.OR import OR
+from lib.binary_logic.AND import AND
+
+def XOR(computer: NPComputer, x_id: int, y_id: int) -> int:
+    
+    return AND(computer, OR(computer, x_id, y_id), NAND(computer, x_id, y_id))
+
+def test_XOR_00():
+    computer = NPComputer()
+
+    # Create two nodes that are zero
+    input_node_0 = computer.generate_node(allow={TriBit.ZERO})
+    input_node_1 = computer.generate_node(allow={TriBit.ZERO})
+
+    # Perform XOR operation
+    result_node = XOR(computer, input_node_0, input_node_1)
+
+    # Get the mapping of nodes to colors
+    result, mapping = computer.get_result_mapping()
+
+    # Make sure the operation succeeded and result is 0 (XOR(0,0) = 0)
+    assert result is True, "XOR operation failed for 00 input"
+    assert mapping[result_node] == mapping[TriBit.ZERO], "XOR operation did not return 0 for 00 input"
+
+def test_XOR_01():
+    computer = NPComputer()
+
+    # Create nodes: first zero, second one
+    input_node_0 = computer.generate_node(allow={TriBit.ZERO})
+    input_node_1 = computer.generate_node(allow={TriBit.ONE})
+
+    # Perform XOR operation
+    result_node = XOR(computer, input_node_0, input_node_1)
+
+    # Get the mapping of nodes to colors
+    result, mapping = computer.get_result_mapping()
+
+    # Make sure the operation succeeded and result is 1 (XOR(0,1) = 1)
+    assert result is True, "XOR operation failed for 01 input"
+    assert mapping[result_node] == mapping[TriBit.ONE], "XOR operation did not return 1 for 01 input"
+
+def test_XOR_10():
+    computer = NPComputer()
+
+    # Create nodes: first one, second zero
+    input_node_0 = computer.generate_node(allow={TriBit.ONE})
+    input_node_1 = computer.generate_node(allow={TriBit.ZERO})
+
+    # Perform XOR operation
+    result_node = XOR(computer, input_node_0, input_node_1)
+
+    # Get the mapping of nodes to colors
+    result, mapping = computer.get_result_mapping()
+
+    # Make sure the operation succeeded and result is 1 (XOR(1,0) = 1)
+    assert result is True, "XOR operation failed for 10 input"
+    assert mapping[result_node] == mapping[TriBit.ONE], "XOR operation did not return 1 for 10 input"
+
+def test_XOR_11():
+    computer = NPComputer()
+
+    # Create two nodes that are one
+    input_node_0 = computer.generate_node(allow={TriBit.ONE})
+    input_node_1 = computer.generate_node(allow={TriBit.ONE})
+
+    # Perform XOR operation
+    result_node = XOR(computer, input_node_0, input_node_1)
+
+    # Get the mapping of nodes to colors
+    result, mapping = computer.get_result_mapping()
+
+    # Make sure the operation succeeded and result is 0 (XOR(1,1) = 0)
+    assert result is True, "XOR operation failed for 11 input"
+    assert mapping[result_node] == mapping[TriBit.ZERO], "XOR operation did not return 0 for 11 input"
+
+def test_all():
+    test_XOR_00()
+    test_XOR_01()
+    test_XOR_10()
+    test_XOR_11()
+
+if __name__ == "__main__":
+    test_all()
+    print("All XOR tests passed!")
