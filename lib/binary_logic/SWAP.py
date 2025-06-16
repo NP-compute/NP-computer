@@ -6,7 +6,7 @@
 from lib.run.INIT import NPComputer
 from lib.run.FINALS import TriBit, ALL_TRI_BITS
 
-def SWAP(computer: NPComputer, input_id: int, from_poss: list=[TriBit.ZERO, TriBit.ONE], to_poss: list=[TriBit.ONE, TriBit.X]) -> int:
+def SWAP(computer: NPComputer, input_id: int, from_poss: list[TriBit]=[TriBit.ZERO, TriBit.ONE], to_poss: list[TriBit]=[TriBit.ONE, TriBit.X]) -> int:
     """ See docstring at top of file for explanation
     Also important to note that the first value in from_poss maps to the first value in to_poss, and the second value in from_poss maps to the second value in to_poss
     Another important note is that there must be all three tri-bit values in the from_poss and to_poss sets combined (otherwise this there are better operations to use)
@@ -50,10 +50,6 @@ def SWAP(computer: NPComputer, input_id: int, from_poss: list=[TriBit.ZERO, TriB
     computer.add_edge(input_id, bottom_branch_id)
     computer.add_edge(bottom_branch_id, bottom_branch_custom_not_id)
     computer.add_edge(bottom_branch_custom_not_id, output_id)
-
-    print(f'{bottom_branch_id=}')
-    print(f'{bottom_branch_custom_not_id=}')
-    print(f'{output_id=}')
 
     return output_id
 
