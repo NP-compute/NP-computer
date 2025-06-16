@@ -31,6 +31,9 @@ def test_all():
     from lib.binary_logic import XNOR
     XNOR.test_all()
 
+    from lib.run.CON import test_all
+    test_all()
+
 if __name__ == "__main__":
     test_all()
     print("All tests passed!")
