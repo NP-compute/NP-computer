@@ -31,7 +31,13 @@ def test_all():
     from lib.binary_logic import XNOR
     XNOR.test_all()
 
-    from lib.run.CON import test_all
+    from lib.run.CONST import test_all
+    test_all()
+
+    from lib.run.VAR import test_all
+    test_all()
+
+    from lib.run.MEM import test_all
     test_all()
 
 if __name__ == "__main__":

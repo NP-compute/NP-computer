@@ -7,3 +7,6 @@ class TriBit(Enum):
     X = 'X'
 
 ALL_TRI_BITS = {TriBit.ZERO, TriBit.ONE, TriBit.X}
+
+# This is the default length of bit ints
+DEFAULT_INT_BIT_LENGTH = 8

@@ -29,7 +29,6 @@ class NPComputer:
     def add_edge(self, u, v):
         self.graph.add_edge(u, v)
 
-
     def __call__(self, *args, **kwds):
         
         # Run the graph coloring algorithm to see if the graph if it is 3 colorable

@@ -2,9 +2,11 @@
 
 from lib.run.FINALS import TriBit, ALL_TRI_BITS
 from lib.run.INIT import NPComputer
+from lib.run.MEM import MEM
+from lib.run.FINALS import DEFAULT_INT_BIT_LENGTH
 
-class CON:
-    def __init__(self, computer: NPComputer, value: int, n: int):
+class CONST(MEM):
+    def __init__(self, computer: NPComputer, value: int = -1, bits: list[int] = None, n: int=DEFAULT_INT_BIT_LENGTH):
         """ Generate a n bit variable
 
         Args:
@@ -14,67 +16,71 @@ class CON:
         """
 
         # Make sure the value is within the range of 0 to 2^n - 1
-        if not (0 <= value < 2 ** n):
+        if not (0 <= value < 2 ** n or (value == -1 and bits is not None)):
             raise ValueError(f"Value {value} is out of range for {n} bits")
 
         self.computer = computer
         self.n = n
         self.bits = []
 
-        # Add in the corresponding bits to the computer
-        for _ in range(n):
-            bit = self.computer.generate_node(allow={TriBit.ZERO} if value & 1 == 0 else {TriBit.ONE})
-            self.bits.append(bit)
+        if bits is None:
+            # Generate n bits
+            for _ in range(n):
+                bit = self.computer.generate_node(allow={TriBit.ZERO} if value & 1 == 0 else {TriBit.ONE})
+                self.bits.append(bit)
 
-            value >>= 1
+                value >>= 1
+        else:
+            # Use the provided bits
+            self.bits = bits
 
 # Test functions
-def test_CON_basic_initialization():
-    """Test basic initialization of CON with valid inputs"""
+def test_CONST_basic_initialization():
+    """Test basic initialization of CONST with valid inputs"""
     computer = NPComputer()
     
     # Test 1-bit constant
-    con1 = CON(computer, 0, 1)
+    con1 = CONST(computer, 0, n=1)
     assert con1.n == 1
     assert len(con1.bits) == 1
     assert con1.computer is computer
     
     # Test 4-bit constant
-    con4 = CON(computer, 5, 4)
+    con4 = CONST(computer, 5, n=4)
     assert con4.n == 4
     assert len(con4.bits) == 4
     assert con4.computer is computer
 
-def test_CON_value_range_validation():
-    """Test that CON validates value ranges correctly"""
+def test_CONST_value_range_validation():
+    """Test that CONST validates value ranges correctly"""
     computer = NPComputer()
     
     # Valid values should work
-    CON(computer, 0, 1)    # 0 for 1-bit
-    CON(computer, 1, 1)    # 1 for 1-bit
-    CON(computer, 0, 4)    # 0 for 4-bit
-    CON(computer, 15, 4)   # 15 for 4-bit (2^4 - 1)
+    CONST(computer, 0, 1)    # 0 for 1-bit
+    CONST(computer, 1, 1)    # 1 for 1-bit
+    CONST(computer, 0, 4)    # 0 for 4-bit
+    CONST(computer, 15, 4)   # 15 for 4-bit (2^4 - 1)
     
     # Invalid values should raise ValueError
     try:
-        CON(computer, 2, 1)
+        CONST(computer, 2, n=1)
         raise AssertionError("Expected ValueError for value 2 in 1 bit")
     except:
         pass
 
     try:
-        CON(computer, 16, 4)
+        CONST(computer, 16, n=4)
         raise AssertionError("Expected ValueError for value 2 in 1 bit")
     except:
         pass
     
     try:
-        CON(computer, -1, 4)
+        CONST(computer, -1, n=4)
         raise AssertionError("Expected ValueError for value 2 in 1 bit")
     except:
         pass
 
-def test_CON_binary_representation():
+def test_CONST_binary_representation():
     """Test that binary values are correctly represented"""
     computer = NPComputer()
     
@@ -91,7 +97,7 @@ def test_CON_binary_representation():
     ]
     
     for value, n_bits, expected_bits in test_cases:
-        con = CON(computer, value, n_bits)
+        con = CONST(computer, value, n=n_bits)
         
         # Get the actual bit values by checking node constraints
         actual_bits = []
@@ -123,12 +129,12 @@ def test_CON_binary_representation():
         
         assert actual_bits == expected_bits, f"Binary representation mismatch for value {value} in {n_bits} bits"
 
-def test_CON_bit_constraints():
+def test_CONST_bit_constraints():
     """Test that bits are properly constrained in the graph"""
     computer = NPComputer()
     
     # Test value 5 (binary: 101) in 3 bits
-    con = CON(computer, 5, 3)  # Should be [1, 0, 1] (LSB first)
+    con = CONST(computer, 5, n=3)  # Should be [1, 0, 1] (LSB first)
     
     # Check bit constraints
     for i, bit_node in enumerate(con.bits):
@@ -147,8 +153,8 @@ def test_CON_bit_constraints():
             assert TriBit.X in neighbors, f"Bit {i} (should be 1) not connected to X"
             assert TriBit.ONE not in neighbors, f"Bit {i} (should be 1) incorrectly connected to ONE"
 
-def test_CON_graph_colorability():
-    """Test that CON doesn't break 3-colorability"""
+def test_CONST_graph_colorability():
+    """Test that CONST doesn't break 3-colorability"""
     computer = NPComputer()
     
     # Test various constants
@@ -160,19 +166,19 @@ def test_CON_graph_colorability():
     
     for value, n_bits in test_values:
         computer_test = NPComputer()
-        con = CON(computer_test, value, n_bits)
+        con = CONST(computer_test, value, n_bits)
         
         result, mapping = computer_test.get_result_mapping()
-        assert result is True, f"Graph became non-3-colorable after creating CON({value}, {n_bits})"
+        assert result is True, f"Graph became non-3-colorable after creating CONST({value}, {n_bits})"
 
-def test_CON_multiple_constants():
+def test_CONST_multiple_constants():
     """Test creating multiple constants in the same computer"""
     computer = NPComputer()
     
     # Create multiple constants
-    con1 = CON(computer, 3, 4)   # 3 in 4 bits
-    con2 = CON(computer, 10, 4)  # 10 in 4 bits
-    con3 = CON(computer, 0, 2)   # 0 in 2 bits
+    con1 = CONST(computer, 3, n=4)   # 3 in 4 bits
+    con2 = CONST(computer, 10, n=4)  # 10 in 4 bits
+    con3 = CONST(computer, 0, n=2)   # 0 in 2 bits
     
     # Check they don't interfere with each other
     assert len(con1.bits) == 4
@@ -187,61 +193,61 @@ def test_CON_multiple_constants():
     result, mapping = computer.get_result_mapping()
     assert result is True, "Graph became non-3-colorable with multiple constants"
 
-def test_CON_edge_cases():
+def test_CONST_edge_cases():
     """Test edge cases and boundary conditions"""
     computer = NPComputer()
     
     # Test minimum values
-    con_min_1 = CON(computer, 0, 1)
-    con_min_4 = CON(computer, 0, 4)
-    con_min_8 = CON(computer, 0, 8)
+    con_min_1 = CONST(computer, 0, 1)
+    con_min_4 = CONST(computer, 0, 4)
+    con_min_8 = CONST(computer, 0, 8)
     
     # Test maximum values
-    con_max_1 = CON(computer, 1, 1)      # 2^1 - 1 = 1
-    con_max_4 = CON(computer, 15, 4)     # 2^4 - 1 = 15
-    con_max_8 = CON(computer, 255, 8)    # 2^8 - 1 = 255
+    con_max_1 = CONST(computer, 1, 1)      # 2^1 - 1 = 1
+    con_max_4 = CONST(computer, 15, 4)     # 2^4 - 1 = 15
+    con_max_8 = CONST(computer, 255, 8)    # 2^8 - 1 = 255
     
     # All should work without errors
     result, mapping = computer.get_result_mapping()
     assert result is True, "Edge case constants broke 3-colorability"
 
-def test_CON_large_constants():
+def test_CONST_large_constants():
     """Test with larger bit widths"""
     computer = NPComputer()
     
     # Test 16-bit constant
-    con16 = CON(computer, 65535, 16)  # 2^16 - 1
+    con16 = CONST(computer, 65535, n=16)  # 2^16 - 1
     assert len(con16.bits) == 16
     
     # Test 32-bit constant (might be slow)
-    con32 = CON(computer, 1234567890, 32)
+    con32 = CONST(computer, 1234567890, n=32)
     assert len(con32.bits) == 32
     
     # Should still be 3-colorable (though might be slow to verify)
     result, mapping = computer.get_result_mapping()
     assert result is True, "Large constants broke 3-colorability"
 
-def test_CON_zero_bits():
+def test_CONST_zero_bits():
     """Test error handling for zero bits"""
     computer = NPComputer()
     
     # 0 bits should be invalid for most use cases
     # But let's see what happens
     try:
-        con = CON(computer, 0, 0)
+        con = CONST(computer, 0, n=0)
         assert len(con.bits) == 0, "0-bit constant should have no bits"
     except (ValueError, ZeroDivisionError):
         # Either error is acceptable for 0-bit case
         pass
 
-def test_CON_reconstruction():
+def test_CONST_reconstruction():
     """Test that we can reconstruct the original value from the bit constraints"""
     computer = NPComputer()
     
     test_values = [(5, 4), (42, 8), (1023, 10)]
     
     for original_value, n_bits in test_values:
-        con = CON(computer, original_value, n_bits)
+        con = CONST(computer, original_value, n=n_bits)
         
         # Reconstruct value from bit constraints
         reconstructed_value = 0
@@ -263,16 +269,16 @@ def test_CON_reconstruction():
         assert reconstructed_value == original_value, f"Reconstructed value {reconstructed_value} != original {original_value}"
 
 def test_all():
-    test_CON_basic_initialization()
-    test_CON_value_range_validation()
-    test_CON_binary_representation()
-    test_CON_bit_constraints()
-    test_CON_graph_colorability()
-    test_CON_multiple_constants()
-    test_CON_edge_cases()
-    test_CON_large_constants()
-    test_CON_zero_bits()
-    test_CON_reconstruction()
+    test_CONST_basic_initialization()
+    test_CONST_value_range_validation()
+    test_CONST_binary_representation()
+    test_CONST_bit_constraints()
+    test_CONST_graph_colorability()
+    test_CONST_multiple_constants()
+    test_CONST_edge_cases()
+    test_CONST_large_constants()
+    test_CONST_zero_bits()
+    test_CONST_reconstruction()
     
 if __name__ == "__main__":
     test_all()
