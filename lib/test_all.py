@@ -40,6 +40,9 @@ def test_all():
     from lib.run.MEM import test_all
     test_all()
 
+    from lib.calculator_logic.ADD import test_all
+    test_all()
+
 if __name__ == "__main__":
     test_all()
     print("All tests passed!")

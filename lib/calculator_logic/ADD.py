@@ -1,7 +1,7 @@
 # This performs addition of two n bit variables
 
 from lib.run.INIT import NPComputer
-from lib.run.FINALS import TriBit, ALL_TRI_BITS
+from lib.run.FINALS import TriBit, ALL_TRI_BITS, TRI_BIT_TO_NODE
 from lib.binary_logic.NOT import NOT
 from lib.binary_logic.NAND import NAND
 from lib.binary_logic.NOR import NOR
@@ -65,8 +65,8 @@ def test_ADD00():
     is_solvable, mapping = computer.get_result_mapping()
 
     assert is_solvable is True, "ADD(0, 0) should be colorable"
-    assert mapping[result.bits[0]] == mapping[TriBit.ZERO], "ADD(0, 0) should return 0"
-    assert mapping[carry] == mapping[TriBit.ZERO], "ADD(0, 0) should return carry 0"
+    assert mapping[result.bits[0]] == mapping[TRI_BIT_TO_NODE[TriBit.ZERO]], "ADD(0, 0) should return 0"
+    assert mapping[carry] == mapping[TRI_BIT_TO_NODE[TriBit.ZERO]], "ADD(0, 0) should return carry 0"
 
 def test_ADD01():
     """ Test the ADD function with 0 + 1 """
@@ -80,8 +80,8 @@ def test_ADD01():
     is_solvable, mapping = computer.get_result_mapping()
 
     assert is_solvable is True, "ADD(0, 1) should be colorable"
-    assert mapping[result.bits[0]] == mapping[TriBit.ONE], "ADD(0, 1) should return 1"
-    assert mapping[carry] == mapping[TriBit.ZERO], "ADD(0, 1) should return carry 0"
+    assert mapping[result.bits[0]] == mapping[TRI_BIT_TO_NODE[TriBit.ONE]], "ADD(0, 1) should return 1"
+    assert mapping[carry] == mapping[TRI_BIT_TO_NODE[TriBit.ZERO]], "ADD(0, 1) should return carry 0"
 
 def test_ADD10():
     """ Test the ADD function with 1 + 0 """
@@ -95,8 +95,8 @@ def test_ADD10():
     is_solvable, mapping = computer.get_result_mapping()
 
     assert is_solvable is True, "ADD(1, 0) should be colorable"
-    assert mapping[result.bits[0]] == mapping[TriBit.ONE], "ADD(1, 0) should return 1"
-    assert mapping[carry] == mapping[TriBit.ZERO], "ADD(1, 0) should return carry 0"
+    assert mapping[result.bits[0]] == mapping[TRI_BIT_TO_NODE[TriBit.ONE]], "ADD(1, 0) should return 1"
+    assert mapping[carry] == mapping[TRI_BIT_TO_NODE[TriBit.ZERO]], "ADD(1, 0) should return carry 0"
 
 def test_ADD11():
     """ Test the ADD function with 1 + 1 """
@@ -110,42 +110,42 @@ def test_ADD11():
     is_solvable, mapping = computer.get_result_mapping()
 
     assert is_solvable is True, "ADD(1, 1) should be colorable"
-    assert mapping[result.bits[0]] == mapping[TriBit.ZERO], "ADD(1, 1) should return 0"
-    assert mapping[carry] == mapping[TriBit.ONE], "ADD(1, 1) should return carry 1"
+    assert mapping[result.bits[0]] == mapping[TRI_BIT_TO_NODE[TriBit.ZERO]], "ADD(1, 1) should return 0"
+    assert mapping[carry] == mapping[TRI_BIT_TO_NODE[TriBit.ONE]], "ADD(1, 1) should return carry 1"
 
-# def test_ADD_small():
-#     """ Test the ADD function with two 0 bit MEMs """
-#     computer = NPComputer()
-#     a = CONST(computer, value=2, n=2)
-#     b = CONST(computer, value=1, n=2)
+def test_ADD_small():
+    """ Test the ADD function with two 0 bit MEMs """
+    computer = NPComputer()
+    a = CONST(computer, value=2, n=2)
+    b = CONST(computer, value=1, n=2)
 
-#     result, carry = ADD(computer, a, b)
+    result, carry = ADD(computer, a, b)
 
-#     # Run the computer to get the result
-#     is_solvable, mapping = computer.get_result_mapping()
+    # Run the computer to get the result
+    is_solvable, mapping = computer.get_result_mapping()
 
-#     assert is_solvable is True, "ADD(1, 2) should be colorable"
-#     assert mapping[result.bits[0]] == mapping[TriBit.ONE], "ADD(1, 2) first bit should return 1"
-#     assert mapping[result.bits[1]] == mapping[TriBit.ONE], "ADD(1, 2) second bit should return 1"
-#     assert mapping[carry] == mapping[TriBit.ZERO], "ADD(1, 2) should return carry 0"
+    assert is_solvable is True, "ADD(1, 2) should be colorable"
+    assert mapping[result.bits[0]] == mapping[TRI_BIT_TO_NODE[TriBit.ONE]], "ADD(1, 2) first bit should return 1"
+    assert mapping[result.bits[1]] == mapping[TRI_BIT_TO_NODE[TriBit.ONE]], "ADD(1, 2) second bit should return 1"
+    assert mapping[carry] == mapping[TRI_BIT_TO_NODE[TriBit.ZERO]], "ADD(1, 2) should return carry 0"
 
-# def test_ADD_big():
-#     """ Test the ADD function with two 0 bit MEMs """
-#     computer = NPComputer()
-#     a = CONST(computer, value=3, n=4)
-#     b = CONST(computer, value=4, n=4)
+def test_ADD_big():
+    """ Test the ADD function with two 0 bit MEMs """
+    computer = NPComputer()
+    a = CONST(computer, value=3, n=4)
+    b = CONST(computer, value=4, n=4)
 
-#     result, carry = ADD(computer, a, b)
+    result, carry = ADD(computer, a, b)
 
-#     # Run the computer to get the result
-#     is_solvable, mapping = computer.get_result_mapping()
+    # Run the computer to get the result
+    is_solvable, mapping = computer.get_result_mapping()
 
-#     assert is_solvable is True, "ADD(3, 4) should be colorable"
-#     assert mapping[result.bits[0]] == mapping[TriBit.ONE], "ADD(3, 4) first bit should return 1"
-#     assert mapping[result.bits[1]] == mapping[TriBit.ONE], "ADD(3, 4) second bit should return 1"
-#     assert mapping[result.bits[2]] == mapping[TriBit.ONE], "ADD(3, 4) third bit should return 0"
-#     assert mapping[result.bits[3]] == mapping[TriBit.ZERO], "ADD(3, 4) fourth bit should return 0"
-#     assert mapping[carry] == mapping[TriBit.ZERO], "ADD(3, 4) should return carry 0"
+    assert is_solvable is True, "ADD(3, 4) should be colorable"
+    assert mapping[result.bits[0]] == mapping[TRI_BIT_TO_NODE[TriBit.ONE]], "ADD(3, 4) first bit should return 1"
+    assert mapping[result.bits[1]] == mapping[TRI_BIT_TO_NODE[TriBit.ONE]], "ADD(3, 4) second bit should return 1"
+    assert mapping[result.bits[2]] == mapping[TRI_BIT_TO_NODE[TriBit.ONE]], "ADD(3, 4) third bit should return 0"
+    assert mapping[result.bits[3]] == mapping[TRI_BIT_TO_NODE[TriBit.ZERO]], "ADD(3, 4) fourth bit should return 0"
+    assert mapping[carry] == mapping[TRI_BIT_TO_NODE[TriBit.ZERO]], "ADD(3, 4) should return carry 0"
 
 def test_all():
     """ Run all tests for the ADD function """
@@ -153,7 +153,7 @@ def test_all():
     test_ADD01()
     test_ADD10()
     test_ADD11()
-    # test_ADD_small()
+    test_ADD_small()
     # test_ADD_big()
 
 if __name__ == "__main__":

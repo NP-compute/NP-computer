@@ -118,7 +118,12 @@ def is_colorable(graph, visualize=False):
     # Initialize domains for each node (possible colors)
     domains = {node: {0, 1, 2} for node in graph.nodes()}
     
-    nodes = sorted(graph.nodes(), key=lambda x: graph.degree(x), reverse=True)
+    # NOTE: This sort is the one that is typically used in greedy coloring
+    # nodes = sorted(graph.nodes(), key=lambda x: graph.degree(x), reverse=True)
+
+    # NOTE: This is a specialized version that uses the order of nodes in the computer to have faster time complexity (if done right it should be linear, we should know what to change with a correct backtracking algorithm)
+    nodes = sorted(graph.nodes())
+
     coloring = {}
     
     if backtrack_with_propagation(graph, nodes, coloring, domains, 0):
