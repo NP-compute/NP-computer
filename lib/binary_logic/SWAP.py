@@ -4,7 +4,7 @@
 # This should only be used at a logic gate level to help generate the NAND logic gate
 
 from lib.run.INIT import NPComputer
-from lib.run.FINALS import TriBit, ALL_TRI_BITS
+from lib.run.FINALS import TriBit, ALL_TRI_BITS, TRI_BIT_TO_NODE
 
 def SWAP(computer: NPComputer, input_id: int, from_poss: list[TriBit]=[TriBit.ZERO, TriBit.ONE], to_poss: list[TriBit]=[TriBit.ONE, TriBit.X]) -> int:
     """ See docstring at top of file for explanation
@@ -63,7 +63,7 @@ def test_SWAP_default_zero_to_one():
     # Check outputs
     result, mapping = computer.get_result_mapping()
     assert result == True
-    assert mapping[SWAP_output_id] == mapping[TriBit.ONE]
+    assert mapping[SWAP_output_id] == mapping[TRI_BIT_TO_NODE[TriBit.ONE]]
 
 def test_SWAP_default_one_to_two():
     computer = NPComputer()
@@ -76,7 +76,7 @@ def test_SWAP_default_one_to_two():
     result, mapping = computer.get_result_mapping()
 
     assert result == True
-    assert mapping[SWAP_output_id] == mapping[TriBit.X]
+    assert mapping[SWAP_output_id] == mapping[TRI_BIT_TO_NODE[TriBit.X]]
 
 def test_SWAP_not_default_one_to_two():
     computer = NPComputer()
@@ -88,7 +88,7 @@ def test_SWAP_not_default_one_to_two():
     # Check outputs
     result, mapping = computer.get_result_mapping()
     assert result == True
-    assert mapping[SWAP_output_id] == mapping[TriBit.X]
+    assert mapping[SWAP_output_id] == mapping[TRI_BIT_TO_NODE[TriBit.X]]
 
 def test_SWAP_not_default_two_to_zero():
     computer = NPComputer()
@@ -101,7 +101,7 @@ def test_SWAP_not_default_two_to_zero():
     result, mapping = computer.get_result_mapping()
 
     assert result == True
-    assert mapping[SWAP_output_id] == mapping[TriBit.ZERO]
+    assert mapping[SWAP_output_id] == mapping[TRI_BIT_TO_NODE[TriBit.ZERO]]
 
 def test_all():
     test_SWAP_default_zero_to_one()

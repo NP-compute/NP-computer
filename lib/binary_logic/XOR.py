@@ -1,7 +1,7 @@
 # This performs 2 bit XOR logic operation
 
 from lib.run.INIT import NPComputer
-from lib.run.FINALS import TriBit, ALL_TRI_BITS
+from lib.run.FINALS import TriBit, ALL_TRI_BITS, TRI_BIT_TO_NODE
 from lib.binary_logic.NOT import NOT
 from lib.binary_logic.NAND import NAND
 from lib.binary_logic.NOR import NOR
@@ -27,7 +27,7 @@ def test_XOR_00():
 
     # Make sure the operation succeeded and result is 0 (XOR(0,0) = 0)
     assert result is True, "XOR operation failed for 00 input"
-    assert mapping[result_node] == mapping[TriBit.ZERO], "XOR operation did not return 0 for 00 input"
+    assert mapping[result_node] == mapping[TRI_BIT_TO_NODE[TriBit.ZERO]], "XOR operation did not return 0 for 00 input"
 
 def test_XOR_01():
     computer = NPComputer()
@@ -44,7 +44,7 @@ def test_XOR_01():
 
     # Make sure the operation succeeded and result is 1 (XOR(0,1) = 1)
     assert result is True, "XOR operation failed for 01 input"
-    assert mapping[result_node] == mapping[TriBit.ONE], "XOR operation did not return 1 for 01 input"
+    assert mapping[result_node] == mapping[TRI_BIT_TO_NODE[TriBit.ONE]], "XOR operation did not return 1 for 01 input"
 
 def test_XOR_10():
     computer = NPComputer()
@@ -61,7 +61,7 @@ def test_XOR_10():
 
     # Make sure the operation succeeded and result is 1 (XOR(1,0) = 1)
     assert result is True, "XOR operation failed for 10 input"
-    assert mapping[result_node] == mapping[TriBit.ONE], "XOR operation did not return 1 for 10 input"
+    assert mapping[result_node] == mapping[TRI_BIT_TO_NODE[TriBit.ONE]], "XOR operation did not return 1 for 10 input"
 
 def test_XOR_11():
     computer = NPComputer()
@@ -78,7 +78,7 @@ def test_XOR_11():
 
     # Make sure the operation succeeded and result is 0 (XOR(1,1) = 0)
     assert result is True, "XOR operation failed for 11 input"
-    assert mapping[result_node] == mapping[TriBit.ZERO], "XOR operation did not return 0 for 11 input"
+    assert mapping[result_node] == mapping[TRI_BIT_TO_NODE[TriBit.ZERO]], "XOR operation did not return 0 for 11 input"
 
 def test_all():
     test_XOR_00()

@@ -1,14 +1,15 @@
 # This is used to initialize the NP computer, and will be used to add nodes and edges to the graph
 import networkx as nx
 from lib.run.IS_COLORABLE import is_colorable
-from lib.run.FINALS import TriBit, ALL_TRI_BITS
+from lib.run.FINALS import TriBit, ALL_TRI_BITS, TRI_BIT_TO_NODE
 
 class NPComputer:
     def __init__(self):
         self.graph = nx.Graph()
 
         # Add in 3 nodes that are fully connected to each other to get 0, 1, and X
-        self.graph.add_edges_from([(TriBit.ZERO, TriBit.ONE), (TriBit.ONE, TriBit.X), (TriBit.X, TriBit.ZERO)])
+        tribit_zero, tribit_one, tribit_x = TRI_BIT_TO_NODE[TriBit.ZERO], TRI_BIT_TO_NODE[TriBit.ONE], TRI_BIT_TO_NODE[TriBit.X]
+        self.graph.add_edges_from([(tribit_zero, tribit_one), (tribit_one, tribit_x), (tribit_x, tribit_zero)])
 
     def generate_node(self, allow={TriBit.ZERO, TriBit.ONE, TriBit.X}) -> int:
         """ Add a node to the graph, with optional constraints on what values it can take
@@ -22,14 +23,14 @@ class NPComputer:
 
         # Connect this node to all TriBits that it is NOT allowed to be so the coloring algorithm can't assign it that value
         for tri_bit in ALL_TRI_BITS - allow:
-            self.graph.add_edge(node_id, tri_bit)
+            self.graph.add_edge(node_id, TRI_BIT_TO_NODE[tri_bit])
 
         return node_id
 
     def add_edge(self, u, v):
         self.graph.add_edge(u, v)
 
-    def __call__(self, *args, **kwds):
+    def __call__(self):
         
         # Run the graph coloring algorithm to see if the graph if it is 3 colorable
         # Essentially this computer returns true or false based off of if the graph is 3 colorable

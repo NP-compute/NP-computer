@@ -1,6 +1,6 @@
 # This is an abstract class to represent n bit constants
 
-from lib.run.FINALS import TriBit, ALL_TRI_BITS
+from lib.run.FINALS import TriBit, ALL_TRI_BITS, TRI_BIT_TO_NODE
 from lib.run.INIT import NPComputer
 from lib.run.MEM import MEM
 from lib.run.FINALS import DEFAULT_INT_BIT_LENGTH
@@ -107,18 +107,18 @@ def test_CONST_binary_representation():
             # Check if this bit is constrained to ZERO or ONE
             bit_neighbors = set(computer.graph.neighbors(bit_node))
             
-            if TriBit.ONE in bit_neighbors and TriBit.X in bit_neighbors:
+            if TRI_BIT_TO_NODE[TriBit.ONE] in bit_neighbors and TRI_BIT_TO_NODE[TriBit.X] in bit_neighbors:
                 # Connected to ONE and X, so must be ZERO
                 actual_bits.append(0)
-            elif TriBit.ZERO in bit_neighbors and TriBit.X in bit_neighbors:
+            elif TRI_BIT_TO_NODE[TriBit.ZERO] in bit_neighbors and TRI_BIT_TO_NODE[TriBit.X] in bit_neighbors:
                 # Connected to ZERO and X, so must be ONE
                 actual_bits.append(1)
             else:
                 # Check the actual mapping
                 if result and bit_node in mapping:
-                    if mapping[bit_node] == mapping.get(TriBit.ZERO, -1):
+                    if mapping[bit_node] == mapping.get(TRI_BIT_TO_NODE[TriBit.ZERO], -1):
                         actual_bits.append(0)
-                    elif mapping[bit_node] == mapping.get(TriBit.ONE, -1):
+                    elif mapping[bit_node] == mapping.get(TRI_BIT_TO_NODE[TriBit.ONE], -1):
                         actual_bits.append(1)
                     else:
                         actual_bits.append(-1)  # Unknown
@@ -144,14 +144,14 @@ def test_CONST_bit_constraints():
         
         if expected_bit == 0:
             # Bit should be constrained to ZERO (connected to ONE and X)
-            assert TriBit.ONE in neighbors, f"Bit {i} (should be 0) not connected to ONE"
-            assert TriBit.X in neighbors, f"Bit {i} (should be 0) not connected to X"
-            assert TriBit.ZERO not in neighbors, f"Bit {i} (should be 0) incorrectly connected to ZERO"
+            assert TRI_BIT_TO_NODE[TriBit.ONE] in neighbors, f"Bit {i} (should be 0) not connected to ONE"
+            assert TRI_BIT_TO_NODE[TriBit.X] in neighbors, f"Bit {i} (should be 0) not connected to X"
+            assert TRI_BIT_TO_NODE[TriBit.ZERO] not in neighbors, f"Bit {i} (should be 0) incorrectly connected to ZERO"
         else:
             # Bit should be constrained to ONE (connected to ZERO and X)
-            assert TriBit.ZERO in neighbors, f"Bit {i} (should be 1) not connected to ZERO"
-            assert TriBit.X in neighbors, f"Bit {i} (should be 1) not connected to X"
-            assert TriBit.ONE not in neighbors, f"Bit {i} (should be 1) incorrectly connected to ONE"
+            assert TRI_BIT_TO_NODE[TriBit.ZERO] in neighbors, f"Bit {i} (should be 1) not connected to ZERO"
+            assert TRI_BIT_TO_NODE[TriBit.X] in neighbors, f"Bit {i} (should be 1) not connected to X"
+            assert TRI_BIT_TO_NODE[TriBit.ONE] not in neighbors, f"Bit {i} (should be 1) incorrectly connected to ONE"
 
 def test_CONST_graph_colorability():
     """Test that CONST doesn't break 3-colorability"""
@@ -255,10 +255,10 @@ def test_CONST_reconstruction():
             neighbors = set(computer.graph.neighbors(bit_node))
             
             # Determine if this bit is 0 or 1 based on constraints
-            if TriBit.ONE in neighbors and TriBit.X in neighbors:
+            if TRI_BIT_TO_NODE[TriBit.ONE] in neighbors and TRI_BIT_TO_NODE[TriBit.X] in neighbors:
                 # Must be ZERO
                 bit_value = 0
-            elif TriBit.ZERO in neighbors and TriBit.X in neighbors:
+            elif TRI_BIT_TO_NODE[TriBit.ZERO] in neighbors and TRI_BIT_TO_NODE[TriBit.X] in neighbors:
                 # Must be ONE
                 bit_value = 1
             else:

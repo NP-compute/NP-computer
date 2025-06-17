@@ -4,7 +4,7 @@
     # Ex: x_1t_2f means x input but 1 is now true and 2 (or rather X) is now false
 
 from lib.run.INIT import NPComputer
-from lib.run.FINALS import TriBit, ALL_TRI_BITS
+from lib.run.FINALS import TriBit, ALL_TRI_BITS, TRI_BIT_TO_NODE
 from lib.binary_logic.SWAP import SWAP
 from lib.binary_logic.NOT import NOT
 
@@ -64,7 +64,7 @@ def test_AND_00():
 
     # Make sure the input node is 1 and the result node is 0
     assert result is True, "AND operation failed for 00 input"
-    assert mapping[result_node] == mapping[TriBit.ZERO], "AND operation did not return 0 for 00 input"
+    assert mapping[result_node] == mapping[TRI_BIT_TO_NODE[TriBit.ZERO]], "AND operation did not return 0 for 00 input"
 
 def test_AND_01():
     computer = NPComputer()
@@ -81,7 +81,7 @@ def test_AND_01():
 
     # Make sure the input node is 1 and the result node is 0
     assert result is True, "AND operation failed for 01 input"
-    assert mapping[result_node] == mapping[TriBit.ZERO], "AND operation did not return 0 for 01 input"
+    assert mapping[result_node] == mapping[TRI_BIT_TO_NODE[TriBit.ZERO]], "AND operation did not return 0 for 01 input"
 
 def test_AND_10():
     computer = NPComputer()
@@ -98,7 +98,7 @@ def test_AND_10():
 
     # Make sure the input node is 1 and the result node is 0
     assert result is True, "AND operation failed for 10 input"
-    assert mapping[result_node] == mapping[TriBit.ZERO], "AND operation did not return 0 for 10 input"
+    assert mapping[result_node] == mapping[TRI_BIT_TO_NODE[TriBit.ZERO]], "AND operation did not return 0 for 10 input"
 
 def test_AND_11():
     computer = NPComputer()
@@ -115,7 +115,7 @@ def test_AND_11():
 
     # Make sure the input node is 1 and the result node is 0
     assert result is True, "AND operation failed for 11 input"
-    assert mapping[result_node] == mapping[TriBit.ONE], "AND operation did not return 1 for 11 input"
+    assert mapping[result_node] == mapping[TRI_BIT_TO_NODE[TriBit.ONE]], "AND operation did not return 1 for 11 input"
 
 def test_all():
     test_AND_00()

@@ -8,5 +8,12 @@ class TriBit(Enum):
 
 ALL_TRI_BITS = {TriBit.ZERO, TriBit.ONE, TriBit.X}
 
+# This is a mapping for the TriBit values to the gauranteed node values
+TRI_BIT_TO_NODE = {
+    TriBit.ZERO: 0,
+    TriBit.ONE: 1,
+    TriBit.X: 2
+}
+
 # This is the default length of bit ints
 DEFAULT_INT_BIT_LENGTH = 8

@@ -1,6 +1,6 @@
 # This is an abstract class to represent n bit variables
 
-from lib.run.FINALS import TriBit, ALL_TRI_BITS
+from lib.run.FINALS import TriBit, ALL_TRI_BITS, TRI_BIT_TO_NODE
 from lib.run.INIT import NPComputer
 from lib.run.MEM import MEM
 from lib.run.FINALS import DEFAULT_INT_BIT_LENGTH
@@ -84,12 +84,12 @@ def test_VAR_bit_constraints():
         neighbors = set(computer.graph.neighbors(bit_node))
         
         # Bit should be connected to X (constraint), but not both ZERO and ONE
-        assert TriBit.X in neighbors, f"Bit {bit_node} should be connected to X as constraint"
+        assert TRI_BIT_TO_NODE[TriBit.X] in neighbors, f"Bit {bit_node} should be connected to X as constraint"
         
         # Should NOT be connected to both ZERO and ONE (that would over-constrain)
         # Actually, for unconstrained bits that can be 0 OR 1, they should only be connected to X
-        zero_connected = TriBit.ZERO in neighbors
-        one_connected = TriBit.ONE in neighbors
+        zero_connected = TRI_BIT_TO_NODE[TriBit.ZERO] in neighbors
+        one_connected = TRI_BIT_TO_NODE[TriBit.ONE] in neighbors
         
         # For a bit that can be either 0 or 1, it should only be connected to X
         assert not (zero_connected and one_connected), f"Bit {bit_node} over-constrained"

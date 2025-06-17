@@ -1,7 +1,7 @@
 # This performs 1 bit NOT operation
 
 from lib.run.INIT import NPComputer
-from lib.run.FINALS import TriBit, ALL_TRI_BITS
+from lib.run.FINALS import TriBit, ALL_TRI_BITS, TRI_BIT_TO_NODE
 
 def NOT(computer: NPComputer, node_id: int, between={TriBit.ZERO, TriBit.ONE}) -> int:
     """ Perform NOT operation on a node in the NPComputer graph
@@ -38,8 +38,8 @@ def test_NOT_ZERO_to_ONE():
     mapping = computer.get_mapping()
 
     # Make sure the input node is 0 and the result node is 1
-    assert mapping[input_node] == mapping[TriBit.ZERO]
-    assert mapping[result_node] == mapping[TriBit.ONE]
+    assert mapping[input_node] == mapping[TRI_BIT_TO_NODE[TriBit.ZERO]]
+    assert mapping[result_node] == mapping[TRI_BIT_TO_NODE[TriBit.ONE]]
 
 def test_NOT_ONE_to_ZERO():
     """ Test NOT operation from 1 to 0 """
@@ -56,8 +56,8 @@ def test_NOT_ONE_to_ZERO():
     mapping = computer.get_mapping()
 
     # Make sure the input node is 1 and the result node is 0
-    assert mapping[input_node] == mapping[TriBit.ONE]
-    assert mapping[result_node] == mapping[TriBit.ZERO]
+    assert mapping[input_node] == mapping[TRI_BIT_TO_NODE[TriBit.ONE]]
+    assert mapping[result_node] == mapping[TRI_BIT_TO_NODE[TriBit.ZERO]]
 
 def test_NOT_ONE_to_X():
     """ Test NOT operation from 1 to 0 """
@@ -74,7 +74,7 @@ def test_NOT_ONE_to_X():
     mapping = computer.get_mapping()
 
     # Make sure the input node is 1 and the result node is 0
-    assert mapping[result_node] == mapping[TriBit.X]
+    assert mapping[result_node] == mapping[TRI_BIT_TO_NODE[TriBit.X]]
 
 def test_all():
     test_NOT_ZERO_to_ONE()

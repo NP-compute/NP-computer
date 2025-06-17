@@ -1,7 +1,7 @@
 # This performs 2 bit OR logic operation
 
 from lib.run.INIT import NPComputer
-from lib.run.FINALS import TriBit, ALL_TRI_BITS
+from lib.run.FINALS import TriBit, ALL_TRI_BITS, TRI_BIT_TO_NODE
 from lib.binary_logic.NOT import NOT
 from lib.binary_logic.NAND import NAND
 
@@ -24,7 +24,7 @@ def test_OR_00():
 
     # Make sure the operation succeeded and result is 0 (OR(0,0) = 0)
     assert result is True, "OR operation failed for 00 input"
-    assert mapping[result_node] == mapping[TriBit.ZERO], "OR operation did not return 0 for 00 input"
+    assert mapping[result_node] == mapping[TRI_BIT_TO_NODE[TriBit.ZERO]], "OR operation did not return 0 for 00 input"
 
 def test_OR_01():
     computer = NPComputer()
@@ -41,7 +41,7 @@ def test_OR_01():
 
     # Make sure the operation succeeded and result is 1 (OR(0,1) = 1)
     assert result is True, "OR operation failed for 01 input"
-    assert mapping[result_node] == mapping[TriBit.ONE], "OR operation did not return 1 for 01 input"
+    assert mapping[result_node] == mapping[TRI_BIT_TO_NODE[TriBit.ONE]], "OR operation did not return 1 for 01 input"
 
 def test_OR_10():
     computer = NPComputer()
@@ -58,7 +58,7 @@ def test_OR_10():
 
     # Make sure the operation succeeded and result is 1 (OR(1,0) = 1)
     assert result is True, "OR operation failed for 10 input"
-    assert mapping[result_node] == mapping[TriBit.ONE], "OR operation did not return 1 for 10 input"
+    assert mapping[result_node] == mapping[TRI_BIT_TO_NODE[TriBit.ONE]], "OR operation did not return 1 for 10 input"
 
 def test_OR_11():
     computer = NPComputer()
@@ -75,7 +75,7 @@ def test_OR_11():
 
     # Make sure the operation succeeded and result is 1 (OR(1,1) = 1)
     assert result is True, "OR operation failed for 11 input"
-    assert mapping[result_node] == mapping[TriBit.ONE], "OR operation did not return 1 for 11 input"
+    assert mapping[result_node] == mapping[TRI_BIT_TO_NODE[TriBit.ONE]], "OR operation did not return 1 for 11 input"
 
 def test_all():
     test_OR_00()
