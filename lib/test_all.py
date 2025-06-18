@@ -46,6 +46,9 @@ def test_all():
     from lib.execution_control.IF import test_all
     test_all()
 
+    from lib.execution_control.BREAK import test_all
+    test_all()
+
 if __name__ == "__main__":
     test_all()
     print("All tests passed!")
