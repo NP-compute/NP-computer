@@ -4,6 +4,10 @@ from lib.run.IS_COLORABLE import is_colorable
 from lib.run.FINALS import TriBit, ALL_TRI_BITS, TRI_BIT_TO_NODE
 
 class NPComputer:
+
+    # This variable keeps track if we connect a node to itself meaning it cant be 3 colorable
+    CONNECT_TO_SELF = False
+
     def __init__(self):
         self.graph = nx.Graph()
 
@@ -18,6 +22,11 @@ class NPComputer:
             allow (dict, optional): Defines what TriBits this node can take, defaults to allow all values. Defaults to {TriBit.ZERO, TriBit.ONE, TriBit.X}.
         """
 
+        # This is a shortcut to have less nodes in the graph
+        # NOTE: Instead of generating a new node we just reuse the existing node if it is the only one allowed
+        if len(allow) == 1:
+            return TRI_BIT_TO_NODE[list(allow)[0]]
+
         node_id = len(self.graph.nodes) + 1
         self.graph.add_node(node_id)
 
@@ -28,6 +37,12 @@ class NPComputer:
         return node_id
 
     def add_edge(self, u, v):
+
+        if u == v:
+            # If we are connecting a node to itself, we set the CONNECT_TO_SELF flag to true
+            self.CONNECT_TO_SELF = True
+            return
+
         self.graph.add_edge(u, v)
 
     def __call__(self):
@@ -50,6 +65,10 @@ class NPComputer:
         Returns:
             (bool, dict): (result, mapping)
         """
+
+        if self.CONNECT_TO_SELF:
+            # If we connected a node to itself, it is not 3 colorable
+            return False, {}
         
         return is_colorable(self.graph)
 
