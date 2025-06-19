@@ -50,8 +50,14 @@ result = SWAP(computer, input_node,
         1. Don't allow 0 FILTER_INPUT unless both inputs are 1
         2. Don't allow 1 FILTER_INPUT when the inputs are both not 0
         3. Don't allow X FILTER_INPUT when the inputs are different
+
+
 ![This image shows an example of a restriction](./EX_FILTER_INPUT_restriction.png)
+
+
     - **Step 3: Filter**: Transforms the restriction results into proper AND output
+
+
 ![This image shows how to map the result into the standard 0 or 1 AND logic](./FILTER_APPLICATION.png)
 
 
