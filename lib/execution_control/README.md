@@ -25,7 +25,7 @@ Conditional execution control for the NP-Computer:
 - **Output blocking**: Acts as if the computation never executed when condition is false
 - **Implementation**: Uses complex SWAP and NOT operations with tri-state logic
 
-![This image shows how to allow input through and deny input](./TriBitOpenCloseGate.png.png)
+![This image shows how to allow input through and deny input](./TriBitOpenCloseGate.png)
 
 ```python
 # Returns output nodes that mirror input nodes when toggle is 1,
