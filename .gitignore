@@ -6,3 +6,4 @@ venv/
 
 # Ignore the data generated as output
 *.col
+training_graphs/
