@@ -3,3 +3,6 @@ __pycache__/
 
 # Ignore virtual environment folders
 venv/
+
+# Ignore the data generated as output
+*.col
