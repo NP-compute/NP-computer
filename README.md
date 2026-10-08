@@ -72,6 +72,15 @@ Arithmetic operations:
 - Built using binary logic primitives
 - Performance characteristics vary due to NP-complete nature
 
+### Turing Machine (`lib/turing_machine/`)
+Finite memory Turing machines compiled into a graph coloring problem:
+- **TM**: Declare a machine (states, alphabet, transitions, tape length) and run it in plain python
+- **TM_TO_GRAPH**: Build the graph, it is 3-colorable only if the machine accepts within `max_steps`
+- **RIGID_GATES**: AND / OR gates with exactly one valid coloring per input
+- **ORDERED_SEARCH** (`lib/run/`): Colors the graph in the order the machine runs, so the search follows the machine step by step
+
+📖 [Detailed documentation](lib/turing_machine/README.md)
+
 ## Usage Examples
 
 ### Basic Computation

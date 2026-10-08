@@ -52,6 +52,18 @@ def test_all():
     from lib.test_dimacs_export import test_all
     test_all()
 
+    from lib.run.ORDERED_SEARCH import test_all
+    test_all()
+
+    from lib.turing_machine.RIGID_GATES import test_all
+    test_all()
+
+    from lib.turing_machine.TM import test_all
+    test_all()
+
+    from lib.turing_machine.TM_TO_GRAPH import test_all
+    test_all()
+
 if __name__ == "__main__":
     test_all()
     print("All tests passed!")
